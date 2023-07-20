@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html> 
+
+<head>
+    <title>Reorganize o Brasil</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="icon" type="image/x-icon" href="static/dist/img/favicon.ico">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/dist/css/general.css">
+    <meta charset="utf-8"/>
+</head>
+
+<body>
+    <div id="mainContent">
+        <div class="row map-n-info">
+            <svg width="80%" height="600"></svg>
+            <div class="column right">
+                <span class="h1 fw-bolder lh-1 stateHeader"></span><br>
+                <span id="stateMunCount" class="h1 fw-medium lh-1"></span><br><hr>
+                <span class="fs-6 fw-lighter mt-3">
+                    Informações:    
+                </span>
+                <div class="infoList mb-3 mt-2">
+                    <span class="fw-light" id = "statePop"></span><br>
+                    <span class="fw-light" id = "stateBiggestCity"></span><br>
+                    <span class="fw-light" id = "stateArea"></span><br>
+                    <span class="fw-light" id = "stateHDI"></span><br>
+                    <span class="fw-light" id = "stateGDP"></span><br>
+                    <span class="fw-light" id = "statePPC"></span><br>
+                    <hr>
+                    <div class="collapses mb-3 mt-2">
+                        <a class="collapse-links collapsed" data-bs-toggle="collapse" href="#collapse22Ellection" aria-expanded="false" aria-controls="collapseEllection">
+                            Eleição 2022
+                        </a>
+                        <div class="collapse" id="collapse22Ellection">
+                            <div class="collapse-content card card-body mt-1" id="state22Ellection">
+                                <div class="candidates">
+                                    <div class="election22 e22-lula election-candidate">
+                                        <div class="candidate-left">
+                                            <div class="img-candidate img-lula">
+                                                <img src="static/dist/img/lula.jpeg" />
+                                            </div>
+                                        </div>
+                                        <div class="candidate-middle">
+                                            <small class="fw-lighter">
+                                                Lula
+                                                <span class='fw-lighter info-detail ms-1' id="totalLula"></span>
+                                            </small>
+                                            <div class="progress progress-lula">
+                                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressLula"></div>
+                                            </div>
+                                        </div>
+                                        <div class="candidate-right">
+                                            <div id="resultLula" class="result-candidate"></div>
+                                        </div>
+                                    </div>
+                                    <div class="election22 e22-bolsonaro election-candidate">
+                                        <div class="candidate-left">
+                                            <div class="img-candidate img-bolsonaro">
+                                                <img src="static/dist/img/hmkk.jpeg" />
+                                            </div>
+                                        </div>
+                                        <div class="candidate-middle">
+                                            <small class="fw-lighter">
+                                                Bolsonaro
+                                                <span class='fw-lighter info-detail ms-1' id="totalBolsonaro"></span>
+                                            </small>
+                                            <div class="progress progress-bolsonaro">
+                                                <div class="progress-bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" id="progressBolsonaro"></div>
+                                            </div>
+                                        </div>
+                                        <div class="candidate-right">
+                                            <div id="resultBolsonaro" class="result-candidate"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <span class="fs-6 fw-lighter mt-3">
+                        Outras estatísticas:   
+                    </span>
+                    <div class="collapses mb-3 mt-2">
+                        <a class="collapse-links collapsed" data-bs-toggle="collapse" href="#collapseGeneral" aria-expanded="false" aria-controls="collapseGeneral">
+                            Gerais
+                        </a>
+                        <div class="collapse" id="collapseGeneral">
+                            <div class="collapse-content card card-body mt-1" id="stateGeneralInfo"></div>
+                        </div>
+                        <a class="collapse-links collapsed mt-2" data-bs-toggle="collapse" href="#collapseAgeNSex" aria-expanded="false" aria-controls="collapseAgeNSex">
+                            Idade e Sexo
+                        </a>
+                        <div class="collapse" id="collapseAgeNSex">
+                            <div class="collapse-content card card-body mt-1" id="stateAgeSex"></div>
+                        </div>
+                        <a class="collapse-links collapsed mt-2" data-bs-toggle="collapse" href="#collapseHomes" aria-expanded="false" aria-controls="collapseHomes">
+                            Domicílios
+                        </a>
+                        <div class="collapse" id="collapseHomes">
+                            <div class="collapse-content card card-body mt-1" id="stateHomes"></div>
+                        </div>
+                        <a class="collapse-links collapsed mt-2" data-bs-toggle="collapse" href="#collapsePoverty" aria-expanded="false" aria-controls="collapsePoverty">
+                            Pobreza
+                        </a>
+                        <div class="collapse" id="collapsePoverty">
+                            <div class="collapse-content card card-body mt-1" id="statePoverty"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row states-n-settings">
+            <div class="mid container">
+                <div class="column mid">
+                    <h2>Reorganize o Brasil</h2>
+                    <div class="state-buttons mb-3">
+                        <button id="newState" style="width:100%">Novo Estado</button>
+                        <button id="assignState" style="width:100%">Atribuir Estado</button>
+                    </div>
+                    <div>
+                        <p class="lead">
+                            Estados:    
+                        </p>
+                        <div id="stateList" class="row"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="column right">
+                <h3>Definições do Mapa</h3>
+                <div class="form-check form-switch">
+                    <input id="showMunicipalities" type="checkbox" checked class="form-check-input"/> <label class="form-check-label" for="showMunicipalities">Mostrar Limites Municipais</label><br/>
+                </div>
+                <div class="form-check form-switch">
+                    <input id="showStates" type="checkbox" checked class="form-check-input"/> <label class="form-check-label" for="showStates">Mostrar Divisas Estaduais</label><br/><br/>
+                </div>
+                <div class="compressor-btns">
+                    <button id="compressor" style="width:50%; float:left;" >Salvar</button>
+                    <button id="decompressor" style="width:50%; float: right;">Carregar</button>
+                </div>
+            </div>
+        </div>
+        <div class="row divider"></div>
+        <div class="row lists">
+            <div class="column left">
+                <div class="form-floating">
+                    <select id="state-lists-select" class="form-select form-select-sm" aria-label=".form-select-sm lists-select Floating label select">
+                        <optgroup label="População">
+                            <option value="1" selected>Maiores Cidades</option>
+                            <option value="9">Menores Cidades</option>
+                        </opgroup>
+                        <optgroup label="Área">
+                            <option value="17">Maiores Territórios</option>
+                            <option value="18">Menores Território</option>
+                            <option value="19">Mais densamente povoados</option>
+                            <option value="20">Menos densamente povoados</option>
+                        </opgroup>
+                        <optgroup label="IDH">
+                            <option value="2">Melhores IDHs</option>
+                            <option value="10">Piores IDHs</option>
+                        </opgroup>
+                        <optgroup label="PIB">
+                            <option value="3">Maiores PIBs</option>
+                            <option value="11">Menores PIBs</option>
+                        </opgroup>
+                        <optgroup label="PIB Per Capita">
+                            <option value="4">Maiores PPC</option>
+                            <option value="12">Menores PPC</option>
+                        </opgroup>
+                        <optgroup label="Eleição 2022">
+                            <option value="21">Mais petistas</option>
+                            <option value="22">Mais bolsonaristas</option>
+                        </opgroup>
+                        <optgroup label="Expectativa de Vida">
+                            <option value="5">Mais Longevidade</option>
+                            <option value="13">Menos Longevidade</option>
+                        </opgroup>
+                        <optgroup label="GINI">
+                            <option value="6">Menos Desiguais</option>
+                            <option value="14">Mais Desiguais</option>
+                        </opgroup>
+                        <optgroup label="Agua e Esgoto">
+                            <option value="7">Mais Inadequados</option>
+                            <option value="15">Menos Inadequados</option>
+                        </opgroup>
+                        <optgroup label="Pobres">
+                            <option value="8">Mais Pobres</option>
+                            <option value="16">Menos Pobres</option>
+                        </opgroup>
+                    </select>
+                    <label class="select-label" for="state-lists-select">Listar cidades do estado por:</label>
+                </div>
+                <div id="state-lists-select-parent">
+                    <p class="h4 fw-bolder mt-3">
+                        <span id="stateCitiesHeader">Maiores cidades</span>
+                        <br><span class="stateName lead fs-5">    
+                        </span>
+                    </p>
+                    <table id="stateCities" class="table table-striped lists-table">
+                        <thead>
+                            <tr id="stateCitiesThs">
+                                <th scope="col">#</th>
+                                <th scope="col">Cidade</th>
+                                <th scope="col" id="stateCitiesCol3">População</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="column right">
+                <div class="form-floating">
+                    <select id="lists-select" class="form-select form-select-sm" aria-label=".form-select-sm lists-select">
+                        <option value="1" selected>População</option>
+                        <option value="9">Área</option>
+                        <option value="2">IDH</option>
+                        <option value="3">PIB</option>
+                        <option value="4">PIB Per Capita</option>
+                        <option value="5">Expectativa de Vida</option>
+                        <option value="6">GINI</option>
+                        <option value="10">Densidade populacional</option>
+                        <option value="7">Agua e Esgoto Inadequados</option>
+                        <option value="8">Pobres</option>
+                        <optgroup label="Eleição 2022">
+                            <option value="11">Mais petistas</option>
+                            <option value="12">Mais bolsonaristas</option>
+                        </opgroup>
+                    </select>
+                    <label class="select-label" for="state-lists-select">Listar estados por:</label>
+                </div>
+                <div id="lists-select-parent">
+
+                </div>
+            </div>
+        </div>
+        <div class="row divider"></div>
+    </div>
+    <div class="footer">
+        <div class="footer-logo mb-2"><img src="static/dist/img/logo.png"/></div>
+        <div class="mb-2">Desenvolvido por <a href="https://github.com/AdrysonFreitas">Adryson Freitas</a>.</div>
+        <hr>
+        <div class="creditos">
+            <div class="mb-1">Agradecimentos especiais e créditos ao <a href="https://github.com/DysLabs/dyslabs.github.io/tree/master/mapster">Dyslabs</a> pelo código inicial que esse app foi baseado.</div>
+            <div class="mb-1">Todos os dados desse site foram compilados a partir de dados gratuitos. Os dados do site não necessariamente estão atualizados ou representam a realidade brasileira, é apenas por diversão. Para dados mais precisos acesse <a href="https://www.ibge.gov.br">IBGE</a>.</div>
+            <div class="mb-1">Veja todos os créditos <a href="creditos.html">aqui</a>.</div>
+        </div>
+    </div>
+</body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+<script src="https://d3js.org/d3.v4.min.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<script src="static/dist/js/jscolor.js"></script>
+<script src="static/dist/js/pako.js"></script>
+<script src="static/dist/js/mapster.js"></script>
+
+</html>

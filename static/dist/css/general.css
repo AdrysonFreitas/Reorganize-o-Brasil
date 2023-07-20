@@ -1,0 +1,541 @@
+@import url('https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,100;0,300;0,400;0,600;0,700;0,900;1,100;1,300;1,400;1,600;1,700;1,900&family=Staatliches&display=swap');
+
+:root{
+    --municipalityBorders: #3f3f3f;
+    --stateBorders: #2b2b2b;
+    --background: #fbfbfb;
+    --hover: #4a94e0;
+    --modal-background: rgba(0, 0, 0, 0.4);
+    --modal-content-bg: #fefefe;
+    --ext-pannels-bg: #4a94e0;
+    --mid-pannels-bg: #ededed;
+    --hover-strong: #2c6fb3;
+    --hdi-very-high: rgb(6, 66, 116);
+    --hdi-high: lime;
+    --hdi-medium: yellow;
+    --hdi-low: red;
+    --table-striped-bg: rgba(0, 0, 0, 0.01);
+    --lula-color: #C0122D;
+    --bolsonaro-color: #272454;
+}
+
+html {
+    height: 100%;
+    width: 100%;
+}
+  
+body {
+    margin: 0;
+}
+
+html, body {
+    height: 100vh;
+}  
+
+#mainContent {
+    background-color: var(--background);
+    border-radius: 5px;
+    font-family: 'Overpass', sans-serif;
+}
+
+#mainContent a {
+    text-decoration: none;
+}
+
+/* Modals */
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: var(--modal-background);
+}
+
+.modalContent {
+    background-color: var(--mid-pannels-bg);
+    margin: 15% auto;
+    padding: 20px;
+    width: 80%;
+    word-wrap: break-word;
+    border-radius: 5px;
+}
+
+/* Modals - Fake Button */
+
+.fakeBtn {
+    cursor: pointer;
+    text-decoration: underline dotted;
+    text-underline-offset: 3px;
+}
+
+.close {
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+/* Column Displays */
+
+.right,
+.left {
+    width: 25%;
+    background-color: var(--ext-pannels-bg);
+    color: var(--background);
+}
+
+#stateList > * {
+    width: 50%;
+}
+
+#stateList .left{
+    border-radius: 5px 0 0 5px;
+    background-color: var(--hover);
+}
+
+#stateList .right{
+    border-radius: 0 5px 5px 0;
+    background-color: var(--hover);
+}
+
+.states-n-settings .column.mid{
+    width: 68rem;
+    background-color: var(--mid-pannels-bg);
+    border-radius: 5px;
+    color: var(--stateBorders);
+}
+
+.mid.container {
+    padding: 2rem 3rem;
+}
+
+.row {
+    display: table;
+    width: 100%;
+    margin: 0 0;
+}
+
+.column {
+    display: table-cell;
+    padding: 16px;
+}
+
+table {
+    background-color: var(--modal-content-bg);
+    color: var(--stateBorders)
+}
+
+.compressor-btns {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.form-check-input:checked[type=radio] {
+    --bs-form-check-bg-image: none;
+    border-color: white;
+    border: 3px solid var(--modal-content-bg);
+    background-color: var(--hover);
+}
+
+.form-check-input {
+    height: 0.9rem;
+    width: 0.9rem;
+}
+
+.form-check-input:checked {
+    background-color: var(--hover-strong);
+    border-color: var(--hover-strong);
+}
+
+/* Center Headings */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    text-align: center;
+}
+
+/* For Purposes */
+
+.smallText {
+    font-size: 10px;
+}
+
+.fullWidth {
+    width: 100%;
+}
+
+.underline {
+    text-decoration: underline;
+}
+
+/* Mapping */
+
+div.tooltip {
+    position: absolute;
+    font: 12px sans-serif;
+    background: var(--modal-content-bg);
+    border: 0px;
+    pointer-events: none;
+    padding: 0.6rem;
+    border-radius: 5px;
+    font-family: 'Overpass', sans-serif;
+    box-shadow: 0px 0px 15px 0px #2b2b2b61;
+    margin-left: 1rem;
+    top: 1px;
+}
+
+div.tooltip b {
+    color: var(--hover);
+}
+
+.municipality .active {
+    fill: orange;
+}
+
+.stateBorders, .countryBorders {
+    fill: none;
+    stroke: var(--stateBorders);
+    stroke-width: 0.3px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+.municipality:hover {
+    fill: var(--hover);
+}
+
+.municipalityBorders {
+    fill: none;
+    stroke: var(--municipalityBorders);
+    stroke-width: 0.1px;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    pointer-events: none;
+}
+
+input {
+    border: none;
+    border-radius: 5px;
+}
+
+button {
+    border: none;
+    padding: 0.5rem 0.5rem;
+}
+
+.right button, .left button {
+    color: var(--hover);
+    border-radius: 5px;
+}
+
+button {
+    background-color: var(--modal-content-bg);
+    border-radius: 5px;
+    color: var(--stateBorders);
+    font-weight: 700;
+}
+
+.modalContent button {
+    background-color: var(--hover);
+    color: var(--modal-content-bg);
+}
+
+.state-buttons {
+    display: flex;
+    gap: 0.5rem;
+    flex-direction: column;
+}
+
+.row > svg {
+    padding: 0 0;
+}
+
+.row.map-n-info .column.right {
+    padding: 3rem 1rem 3rem 1rem;
+    vertical-align: top;
+}
+
+:focus-visible, select.form-select.form-select-sm:focus {
+    outline: 0.1rem dotted var(--hover);
+    box-shadow: none;
+}
+
+.c-compressor .input-group {
+    margin-top: 30px;
+    position: relative;
+    display: contents;
+}
+  
+.c-compressor #copyTarget {
+    width: 100%;
+}
+  
+.c-compressor .copied {
+    opacity: 1;
+    position: absolute;
+    left: 55px;
+}
+
+.form-control {
+    overflow-x: hidden;
+}
+
+.list-states {
+    padding: 1rem;
+    border-radius: 5px;
+}
+
+.list-states input.jscolor {
+    width: 100%;
+}
+
+span#stateMunCount {
+    font-size: medium;
+}
+
+.info-detail {
+    font-size: smaller;
+    opacity: 0.6;
+}
+
+a.collapse-links {
+    text-decoration: none;
+    color: var(--background);
+}
+
+a.collapse-links.collapsed:before {
+    content: "+";
+    float: right;
+    transition: all 0.5s;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--hover-strong);
+}
+
+a.collapse-links:active:before {
+    content: "+";
+    -webkit-transform: rotate(180deg);
+    -moz-transform: rotate(180deg);
+    transform: rotate(180deg);
+} 
+
+a.collapse-links:before {
+    content: "-";
+    float: right;
+    transition: all 0.5s;
+    font-size: 1rem;
+    font-weight: 900;
+    color: var(--hover-strong);
+} 
+
+.card.card-body.collapse-content {
+    background-color: var(--hover-strong);
+    border: none;
+}
+
+.collapses {
+    display: flex;
+    flex-direction: column;
+}
+
+.row.lists{
+    padding: 0 3rem;
+}
+
+.row.lists .column.left, .row.lists .column.right {
+    color: var(--stateBorders);
+    background-color: var(--background);
+    width: 50%;
+}
+
+.row.lists .h4 {
+    text-align: left;
+}
+
+table.lists-table {
+    text-align: center;
+    border-radius: 5px;
+    background-color: var(--background);
+}
+
+.table-striped>tbody>tr:nth-of-type(odd)>* {
+    --bs-table-bg-type: var(--table-striped-bg);
+}
+
+.table>:not(caption)>*>* {
+    background-color: var(--background); 
+}
+
+th {
+    color: var(--hover)!important;
+}
+
+select.form-select.form-select-sm {
+    border: none;
+    background-color: var(--mid-pannels-bg);
+}
+
+.select-label {
+    padding-left: 0.4rem!important;
+    z-index: 1!important;
+}
+
+.form-floating>.form-select~label::after {
+    background-color: unset!important;
+}
+
+.states-n-settings .column.right {
+    border-radius: 0 0 20px 20px;
+}
+
+.row.divider {
+    height: 1.5rem;
+}
+
+.progress-bar {
+    border-radius: 100px;
+}
+
+.progress {
+    background-color: transparent;
+    width: 100%;
+}
+
+.election-candidate {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0 0.5rem;
+}
+
+.img-candidate img {
+    width: 100%;
+}
+
+.img-candidate {
+    width: 2rem;
+    height: 2rem;
+    overflow: hidden;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+}
+
+.result-candidate {
+    font-size: 0.7rem;
+    font-weight: 600;
+}
+
+.candidate-left, .candidate-right {
+    width: max-content;
+}
+
+.candidate-middle {
+    display: grid;
+    width: 100%;
+}
+
+.candidates {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.credits-header > .column.left > span > a{
+    color: var(--background);
+}
+
+.credits-header > .column.left > span > a:hover{
+    font-weight: 600;
+}
+
+.credits-header > .column.left {
+    height: 100vh;
+}
+
+li::marker {
+    color: var(--hover);
+}
+
+.footer {
+    background-color: var(--mid-pannels-bg);
+    font-family: 'Overpass', sans-serif;
+    color: #747474;
+    font-weight: 300;
+    font-size: smaller;
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.footer a {
+    text-decoration: none;
+}
+
+.footer hr {
+    width: 50%;
+    margin-top: 0.1rem;
+    opacity: .2;
+}
+
+.footer-logo {
+    width: 4rem;
+}
+
+.footer-logo img {
+    width: 100%;
+    height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .column, .row.lists .column.left, .row.lists .column.right{
+        display: block;
+        width: 100%;
+    }
+
+    #stateList .column.left{
+        height: max-content!important;
+    }
+
+    .row#stateList {
+        display: flex;
+    }
+
+    .states-n-settings .column.mid {
+        width: 100%;
+    }
+    
+    .mid.container {
+        padding: 0;
+    }
+
+    .row.lists {
+        padding: 0;
+    }
+
+    .states-n-settings .column.right {
+        border-radius: 0;
+    }
+
+    .credits-header > .column.left {
+        height: max-content;
+    }
+
+    .credits-header .column.mid{
+        display: block;
+        width: 100%;
+    }
+}
+
