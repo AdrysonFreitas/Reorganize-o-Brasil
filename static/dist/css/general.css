@@ -28,6 +28,10 @@ body {
     margin: 0;
 }
 
+body a {
+    color: var(--hover);
+}
+
 html, body {
     height: 100vh;
 }  
