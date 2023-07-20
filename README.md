@@ -13,4 +13,4 @@ Foi inspirado e desenvolvido a partir do app [mapster](https://github.com/DysLab
 
 ## Web
 
-Você pode acessar ao site [aqui](d).
+Você pode acessar ao site [aqui](https://adrysonfreitas.github.io/reorganize-o-brasil/).
