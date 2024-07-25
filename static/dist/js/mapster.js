@@ -75,7 +75,7 @@ function configState(state, nname, ncolor) {
     var old = new_states[state]
     delete new_states[state]
     new_states[nname] = old
-    new_states[nname].color = ncolor
+    new_states[nname].color = "#" + ncolor
     reload()
 }
 
@@ -160,8 +160,8 @@ function reloadStateList() { // needw mucho worko
         radio.onclick = function() {
             selectedState = this.value
             var s = aggregateState(new_states[this.value])
-            d3.select(".stateHeader").html(name);
-            d3.select(".stateName").html(name);
+            d3.select(".stateHeader").html(selectedState);
+            d3.select(".stateName").html(selectedState);
             d3.select("#stateMunCount").html(state.municipalities.length.toLocaleString()+" municípios")
             d3.select("#statePop").html("População: ").append("b").attr("class", "fw-bold").html(s.population.total.toLocaleString())
             d3.select("#stateHDI").html("IDH: ").append("b").attr("class", "fw-bold").html(s.population.general.indicators.hdi.toLocaleString(undefined, {minimunFractionDigits: 3, maximumFractionDigits: 3}) + " <span class='fw-lighter info-detail'>" + s.population.general.indicators.hdiLevel + " <svg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='" + s.population.general.indicators.hdiColor + "' class='bi bi-circle-fill' viewBox='0 0 16 16' style='opacity: 1;'><circle cx='8' cy='7' r='4'/></svg></span>")
@@ -1036,23 +1036,9 @@ function reloadStateList() { // needw mucho worko
         staten.setAttribute("for", "radioState"+name);
         staten.innerHTML = name
         if (name != "Indefinido") {
-            staten.className = "fw-bold fakeBtn"
-            staten.onclick = function() {
-                var modal = createModal().querySelector(".modalContent")
-                var p = modal.appendChild(ned("p"))
-                p.innerHTML = "State Name: "
-                var tf = p.appendChild(ned("input"))
-                d3.select(tf).attr("placeholder", staten.innerHTML)
-
-                var btn = modal.appendChild(ned("button"))
-                btn.innerHTML = "Rename State"
-                btn.onclick = function() {
-                    disposeModal(modal)
-                    configState(staten.innerHTML, tf.value, state.color)
-                }
-                showModal(modal)
-            }
+            staten.className = "fw-bold fakeBtn editName"
         }
+
         var input = p.appendChild(ned("input"))
         input.className = "jscolor"
         input.value = state.color
@@ -1060,9 +1046,41 @@ function reloadStateList() { // needw mucho worko
         me2.attr("state", name)
         d3.select(input).on("change", function() {
             var me3 = d3.select(this)
-            configState(me3.attr("state"), me3.attr("state"), "#" + me3.node().value)
+            configState(me3.attr("state"), me3.attr("state"), me3.node().value)
         })
     }
+}
+
+const stateList = document.getElementById('stateList');
+
+stateList.addEventListener('click', function(event) {
+    if (event.target.classList.contains('editName')) {
+        editName.call(event.target);
+    }
+});
+
+function editName(){
+    var modal = createModal().querySelector(".modalContent");
+    var p = modal.appendChild(ned("p"));
+    p.innerHTML = "Novo nome do estado: ";
+
+    var tf = p.appendChild(ned("input"));
+    var oldstate = this.innerHTML;
+    d3.select(tf).attr("placeholder", oldstate);
+
+    var oldcolor = document.querySelectorAll('input.jscolor[state="'+oldstate+'"]')[0].value;
+
+    var btn = modal.appendChild(ned("button"))
+    btn.innerHTML = "Renomear"
+    btn.onclick = function() {
+        if (tf.value.trim() && tf.value !== oldstate) {
+            disposeModal(modal);
+            configState(oldstate, tf.value, oldcolor);
+        } else {
+            alert("Please enter a valid new state name.");
+        }
+    }
+    showModal(modal)
 }
 
 function aggregateState(state) {
@@ -1337,9 +1355,11 @@ d3.select("button#newState").on("click", function() {
     var btn = modal.appendChild(ned("button"))
     btn.innerHTML = "Criar Estado"
     btn.onclick = function() {
-        if (name.value != ""){
+        if (name.value.trim()){
             newState(name.value, "#" + color.value, [])
             disposeModal(modal)
+        } else {
+            alert("Please enter a valid name.");
         }
     }
 
@@ -1349,28 +1369,73 @@ d3.select("button#newState").on("click", function() {
     reloadJscolor()
 })
 
+function downloadSave(){
+    
+}
+
 d3.select("#compressor").on("click", function() {
+    var fileName = "Save - Reorganize o Brasil.rbr";
+    var fileContent = btoa(JSON.stringify(new_states));
+    var myFile = new Blob([fileContent], {type: 'text/plain'});
+
+    window.URL = window.URL || window.webkitURL;
+
     var modal = createModal().querySelector(".modalContent")
-    modal.appendChild(ned("p")).innerHTML = ('<div class="container c-compressor"><div class="input-group"><label for="copyTarget">Copie e guarde o texto a seguir (pode demorar um pouco para ser gerado):</label><textarea type="text" id="copyTarget" rows=5 class="form-control" readonly>'+btoa(JSON.stringify(new_states))+'</textarea>')
+    modal.appendChild(ned("p")).innerHTML = ('<div class="container c-compressor"><p>Baixe o seu save e guarde em um lugar seguro:</p></div>');
+    var modalBtn = modal.querySelector(".c-compressor").appendChild(ned("a"));
+    modalBtn.innerHTML = ("Baixar");
+    modalBtn.id = "download";
+    modalBtn.className = "btn";
+    modalBtn.setAttribute("download", fileName);  
+    modalBtn.setAttribute("href", window.URL.createObjectURL(myFile));
+
     document.body.appendChild(modal.parentElement)
     modal.parentElement.style.display = 'block'
 })
 
 d3.select("#decompressor").on("click", function() {
     var modal = createModal().querySelector(".modalContent")
-    modal.appendChild(ned("p")).innerHTML = ("Cole o texto do seu save: ")
-    var tx = modal.appendChild(ned("textarea"))
-    tx.style.width = "100%"
-    tx.style.height = "100%"
-    tx.className = "form-control mb-3"
+    var saveLabel = modal.appendChild(ned("label"));
+    saveLabel.setAttribute("for", "fileInput");
+    saveLabel.innerHTML = "Carregue o arquivo do seu save aqui: ";
+    saveLabel.className = "form-label"
+
+    var saveInput = modal.appendChild(ned("input"))
+    saveInput.setAttribute("type", "file")
+    saveInput.setAttribute("accept", ".rbr")
+    saveInput.id = "fileInput"
+    saveInput.className = "form-control";
+
     var btn = modal.appendChild(ned("button"))
-    btn.innerHTML = "Load Map"
+    btn.innerHTML = "Carregar"
+    btn.id = "loadBtn"
+
     document.body.appendChild(modal.parentElement)
     modal.parentElement.style.display = 'block'
+
     btn.onclick = function() {
-        disposeModal(modal)
-        new_states = JSON.parse(atob(tx.value))
-        reload()
+        const fileInput = document.getElementById('fileInput');
+        const saveFile = fileInput.files[0];
+
+        if (saveFile) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                var save = e.target.result;
+
+                disposeModal(modal);
+                try {
+                    new_states = JSON.parse(atob(save));
+                    reload();
+                } catch (error) {
+                    console.error("Failed to parse file content:", error);
+                    alert("There was an error processing the file. Please check the file format.");
+                }
+            };
+            reader.readAsText(saveFile);
+        } else {
+            alert('Please select a file.');
+        }
+        reload();
     }
 })
 

@@ -231,7 +231,7 @@ input {
     border-radius: 5px;
 }
 
-button {
+button, a.btn {
     border: none;
     padding: 0.5rem 0.5rem;
 }
@@ -241,14 +241,18 @@ button {
     border-radius: 5px;
 }
 
-button {
+button, a.btn {
     background-color: var(--modal-content-bg);
     border-radius: 5px;
     color: var(--stateBorders);
     font-weight: 700;
 }
 
-.modalContent button {
+input[type="file"] {
+    margin-bottom: 1.5rem;
+}
+
+.modalContent button, .modalContent a.btn {
     background-color: var(--hover);
     color: var(--modal-content-bg);
 }
