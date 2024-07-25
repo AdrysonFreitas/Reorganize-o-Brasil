@@ -1439,6 +1439,15 @@ d3.select("#decompressor").on("click", function() {
     }
 })
 
+d3.select("#loadRealBR").on("click", function() {
+    fetch("brasil/real_save.txt")
+    .then((res) => res.text())
+    .then((realbr) => {
+        new_states = JSON.parse(atob(realbr));
+        reload();
+    })
+});
+
 d3.select("#assignState").on("click", function() {
     console.log("...")
     var modal = createModal().querySelector(".modalContent")
